@@ -80,7 +80,7 @@ public class Dashboard {
                     // } else if (teacherAction == teacherDash[1]) {
                     // } else if (teacherAction == teacherDash[2]) {
                     // } else if (teacherAction == teacherDash[3]) {
-                       } **/
+                       } else **/
 
                     if (teacherAction == teacherDash[4]) {
                         JOptionPane.showConfirmDialog(null,
