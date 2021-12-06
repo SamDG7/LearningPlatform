@@ -1,15 +1,14 @@
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Dashboard {
-    public static String username;
-    public static String password;
     public static Object[] courses;
+    public static Object courseName;
+    public static String[] quizzes;
+    public static Object quizName;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         Object teachOrStu;
         boolean login = false;
         String[] accountOptions = {"Student", "Teacher", "Exit"};
@@ -40,7 +39,6 @@ public class Dashboard {
                             JOptionPane.INFORMATION_MESSAGE, null,
                             courses, courses[lastCourse]);
                     Course course = new Course(courseName);
-
                     do {
                         studentAction = JOptionPane.showInputDialog(null,
                                 "Welcome! What would you like to do?", "Brightspace",
@@ -76,13 +74,146 @@ public class Dashboard {
                             JOptionPane.INFORMATION_MESSAGE, null,
                             teacherDash, teacherDash[4]);
 
-                    /** if (teacherAction == teacherDash[0]) {
-                        } else if (teacherAction == teacherDash[1]) {
-                        } else if (teacherAction == teacherDash[2]) {
-                        } else if (teacherAction == teacherDash[3]) {
-                        } else **/
+                    // create a course
+                    if (teacherAction == teacherDash[0]) {
+                            courseName = JOptionPane.showInputDialog(null, "Please enter the name of the new course",
+                                "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                            try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("Courses.txt", true)))) {
+                                pw.write(courseName);
+                                pw.println();
+                                pw.flush();
+                            } catch (IOException e) {
+                                System.out.println("Error occurred writing to file!");
+                                e.printStackTrace();
+                            }
 
-                    if (teacherAction == teacherDash[4]) {
+                    // edit a course
+                    } else if (teacherAction == teacherDash[1]) {
+                        Course course = new Course(courseName);
+                        course.getCourses();
+
+                        Object editAction;
+                        String[] editOptions = {"Create a quiz", "Delete a quiz", "Exit"};
+                        editAction = JOptionPane.showInputDialog(null,
+                                "What would you like to do to the course?", "Brightspace",
+                                JOptionPane.INFORMATION_MESSAGE, null,
+                                editOptions, editOptions[2]);
+
+                        // creates a quiz
+                        if (editAction == editOptions[0]) {
+                            Object quizFile = JOptionPane.showInputDialog(null, "What is the name of the file you would like to upload as a quiz?",
+                                    "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                            Object quizName = JOptionPane.showInputDialog(null, "What is the name of the quiz?",
+                                    "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                            Object questionNum = JOptionPane.showInputDialog(null, "How many questions is the quiz?",
+                                    "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                            String[] randomYN = {"Yes", "No", "Exit"};
+                            Object temp = JOptionPane.showInputDialog(null,
+                                    "Would you like the question order to be randomized?", "Brightspace",
+                                    JOptionPane.INFORMATION_MESSAGE, null,
+                                    randomYN, randomYN[2]);
+                            boolean random = false;
+                            if (temp == randomYN[0]) {
+                                random = true;
+                            }
+                            try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("Quizzes.txt", true)))) {
+                                if (quizName.contains(" ")) {
+                                    quizName = quizName.replaceAll(" ", "_");
+                                }
+                                pw.write(courseName + " " + quizFile + " " + quizName + " " + questionNum + " " + random);
+                                pw.println();
+                                pw.flush();
+                            } catch (IOException e) {
+                                JOptionPane.showConfirmDialog(null,
+                                        "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                                e.printStackTrace();
+                            }
+
+                        // deletes a quiz
+                        } else if (editAction == editOptions[1]) {
+                            ArrayList<String> lines2 = new ArrayList<>();
+                            try (BufferedReader br = new BufferedReader(new FileReader("Quizzes.txt"))) {
+                                String line;
+                                while ((line = br.readLine()) != null) {
+                                    quizzes[Integer.parseInt(line)] = line + ", ";
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            int lastQuiz = quizzes.length + 1;
+                            quizzes[lastQuiz] = "Exit";
+                            quizName = JOptionPane.showInputDialog(null,
+                                    "Which quiz would you like to delete?", "Brightspace",
+                                    JOptionPane.INFORMATION_MESSAGE, null,
+                                    quizzes, quizzes[lastQuiz]);
+                            try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("Quizzes.txt", false)))) {
+                                for (int i = 0; i < lines2.size(); i++) {
+                                    if (!(lines2.get(i).contains(quizName) && lines2.get(i).contains(courseName))) {
+                                        pw.write(lines2.get(i));
+                                        pw.flush();
+                                    }
+                                }
+                            } catch (IOException e) {
+                                JOptionPane.showConfirmDialog(null,
+                                        "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                                e.printStackTrace();
+                            }
+                        }
+
+                    // removes a course
+                    } else if (teacherAction == teacherDash[2]) {
+                        try (BufferedReader br = new BufferedReader(new FileReader("Courses.txt"))) {
+                            String line;
+                            while ((line = br.readLine()) != null) {
+                                if (line.contains(courseName)) {
+                                    line = line.substring(line.indexOf(' ') + 1);
+                                    line = line.substring((line.indexOf(' ') + 1));
+                                    line = line.substring(0, line.indexOf(' '));
+                                    courses[Integer.parseInt(line)] = line + ", ";
+                                }
+                            }
+                            int lastCourse = courses.length + 1;
+                            courses[lastCourse] = "Exit";
+                            courseName = JOptionPane.showInputDialog(null,
+                                    "Please select a course to remove", "Brightspace",
+                                    JOptionPane.INFORMATION_MESSAGE, null,
+                                    courses, courses[lastCourse]);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        ArrayList<String> lines = new ArrayList<>();
+                        try (BufferedReader br = new BufferedReader(new FileReader("Courses.txt"))) {
+                            String line;
+                            int count = 1;
+                            while ((line = br.readLine()) != null) {
+                                lines.add(line);
+                                System.out.println(count + ": " + line);
+                                count++;
+                            }
+                            try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("Courses.txt", false)))) {
+                                for (int i = 0; i < lines.size(); i++) {
+                                    if (!(lines.get(i).equals(courseName))) {
+                                        pw.write(lines.get(i));
+                                        pw.flush();
+                                    }
+                                }
+                            } catch (IOException e) {
+                                JOptionPane.showConfirmDialog(null,
+                                        "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                                e.printStackTrace();
+                            }
+                        } catch (IOException e) {
+                            JOptionPane.showConfirmDialog(null,
+                                    "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                            e.printStackTrace();
+                        }
+
+                    // access a course
+                    } else if (teacherAction == teacherDash[3]) {
+
+                    // exit
+                    } else if (teacherAction == teacherDash[4]) {
                         JOptionPane.showConfirmDialog(null,
                         "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                         return;
