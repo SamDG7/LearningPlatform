@@ -1,23 +1,33 @@
 import javax.swing.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class TakeQuizGUI extends JFrame {
-    public static void main(String[] args){
-        String quizName;
-        String quizAnswers;
-        
-        showWelcomeMessageDialog();
-        quizName=showQuizDialog();
+    public static Object courseName;
+    public static Object quizName;
+    public static String quizAnswers;
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        showCourseDialog();
+        showQuizDialog();
         quizAnswers=showQuizAnswerDialog();
         showPrintingDetailsDialog();
 
     }
-    public static void showWelcomeMessageDialog(){
-        JOptionPane.showMessageDialog(null,"Welcome to the Quiz Taker program",
-                "QuizTaker",JOptionPane.INFORMATION_MESSAGE);
+
+    public static void showCourseDialog() throws FileNotFoundException, IOException {
+        Course course = new Course(courseName);
+        course.getCourses();
     }
-    public static String showQuizDialog(){
+
+    public static void showQuizDialog() throws FileNotFoundException, IOException {
+        Course course = new Course(quizName);
+        course.getQuizzes();
+
+
+        // not sure if necessary
         String quizName;
-        do{
+        do {
             quizName=JOptionPane.showInputDialog(null, "Which quiz would you like to take?",
                     "Quiz Taker", JOptionPane.QUESTION_MESSAGE);
             if(quizName==null||quizName.isBlank()){
@@ -26,17 +36,18 @@ public class TakeQuizGUI extends JFrame {
             }else{
                 //method used in proj 4
             }
-        }while(quizName==null||quizName.isBlank());
-        return quizName;
+        } while(quizName==null||quizName.isBlank());
+        // *****
+
     }
     public static String showQuizAnswerDialog(){
         String quizAnswers;
         do{
             quizAnswers=JOptionPane.showInputDialog(null,"Attach your answer file: "
-            ,"Quiz Taker",JOptionPane.QUESTION_MESSAGE);
+                    ,"Quiz Taker",JOptionPane.QUESTION_MESSAGE);
             if(quizAnswers==null){
                 JOptionPane.showMessageDialog(null,"Answer file cannot be empty!"
-                ,"Quiz Taker",JOptionPane.ERROR_MESSAGE);
+                        ,"Quiz Taker",JOptionPane.ERROR_MESSAGE);
             }else{
                 //method used in proj 4
             }
@@ -45,7 +56,7 @@ public class TakeQuizGUI extends JFrame {
     }
     public static void showPrintingDetailsDialog(){
         JOptionPane.showMessageDialog(null,"Saving your Details...","Quiz Taker"
-        ,JOptionPane.INFORMATION_MESSAGE);
+                ,JOptionPane.INFORMATION_MESSAGE);
     }
 
 }
