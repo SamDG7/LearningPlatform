@@ -1,14 +1,12 @@
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class LogIn {
     public static String username;
     public static String password;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         Object teachOrStu;
         boolean login = false;
         String[] accountOptions = {"Student", "Teacher", "Exit"};
@@ -50,7 +48,8 @@ public class LogIn {
                         pw.println();
                         pw.flush();
                     } catch (IOException e) {
-                        System.out.println("Error occurred writing to file!");
+                        JOptionPane.showConfirmDialog(null,
+                                "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                         e.printStackTrace();
                     }
                 } else if (teachOrStu == accountOptions[0]){
@@ -60,7 +59,8 @@ public class LogIn {
                         pw.println();
                         pw.flush();
                     } catch (IOException e) {
-                        System.out.println("Error occurred writing to file!");
+                        JOptionPane.showConfirmDialog(null,
+                                "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                         e.printStackTrace();
                     }
                 }
@@ -120,9 +120,9 @@ public class LogIn {
                     }
                 } while (!login);
             }
-            
+
             // Dashboard.java code
-            
+
         } while (!login);
     }
 }
