@@ -21,7 +21,6 @@ public class Course {
     public static String[] courses;
     public static Object courseName;
 
-
     public void getCourses() throws FileNotFoundException, IOException {
         try (BufferedReader br = new BufferedReader(new FileReader("Courses.txt"))) {
             String line;
