@@ -293,32 +293,19 @@ public class Brightspace {
                         }
 
                         ArrayList<String> lines = new ArrayList<>();
-                        try (BufferedReader br = new BufferedReader(new FileReader("Courses.txt"))) {
-                            String line;
-                            int count = 1;
-                            while ((line = br.readLine()) != null) {
-                                lines.add(line);
-                                System.out.println(count + ": " + line);
-                                count++;
-                            }
-                            try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("Courses.txt", false)))) {
-                                for (int i = 0; i < lines.size(); i++) {
-                                    if (!(lines.get(i).equals(courseName))) {
-                                        pw.write(lines.get(i));
-                                        pw.flush();
-                                    }
+                        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("Courses.txt", false)))) {
+                            for (int i = 0; i < lines.size(); i++) {
+                                if (!(lines.get(i).equals(courseName))) {
+                                    pw.write(lines.get(i));
+                                    pw.flush();
                                 }
-                            } catch (IOException e) {
-                                JOptionPane.showConfirmDialog(null,
-                                        "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                                e.printStackTrace();
                             }
                         } catch (IOException e) {
                             JOptionPane.showConfirmDialog(null,
                                     "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                             e.printStackTrace();
                         }
-
+                        
                         // access a course
                     } else if (teacherAction == teacherDash[3]) {
 
