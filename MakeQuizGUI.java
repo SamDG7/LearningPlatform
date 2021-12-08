@@ -56,7 +56,27 @@ public class MakeQuizGUI extends JFrame {
         return randomQuestion;
     }
     
-  
+  public static String showQuestionInputDialog() {
+        String quizQuestions; 
+        do {
+        	quizQuestions = JOptionPane.showInputDialog(null, "Enter a quiz question: ",
+                    "Quiz Maker", JOptionPane.QUESTION_MESSAGE);
+            if (quizQuestions == null) {
+                JOptionPane.showMessageDialog(null, "Quiz question cannot be empty!", "Quiz Maker",
+                        JOptionPane.ERROR_MESSAGE);
+
+            } //end if
+            
+        } while (quizQuestions == null);
+        
+        return quizQuestions;
+    }
+
+    
+    public static void showPrintingDetailsDialog() {
+    	JOptionPane.showMessageDialog(null, "Saving your Details...", "Quiz Maker", 
+    			JOptionPane.INFORMATION_MESSAGE);
+    }
   
   
 }
