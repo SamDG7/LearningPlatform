@@ -36,11 +36,11 @@ public class TakeQuizGUI extends JFrame {
             }else{
                 //method used in proj 4
             }
-        } while(quizName==null||quizName.isBlank());
+        } while(quizName == null||quizName.isBlank());
         // *****
 
     }
-    public static String showQuizAnswerDialog(){
+    public static String showQuizAnswerDialog() {
         String quizAnswers;
         do{
             quizAnswers=JOptionPane.showInputDialog(null,"Attach your answer file: "
@@ -48,13 +48,13 @@ public class TakeQuizGUI extends JFrame {
             if(quizAnswers==null){
                 JOptionPane.showMessageDialog(null,"Answer file cannot be empty!"
                         ,"Quiz Taker",JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
                 //method used in proj 4
             }
-        }while(quizAnswers==null);
+        } while(quizAnswers == null);
         return quizAnswers;
     }
-    public static void showPrintingDetailsDialog(){
+    public static void showPrintingDetailsDialog() {
         JOptionPane.showMessageDialog(null,"Saving your Details...","Quiz Taker"
                 ,JOptionPane.INFORMATION_MESSAGE);
     }
