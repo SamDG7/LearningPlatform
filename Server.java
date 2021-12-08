@@ -4,14 +4,27 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server {
+public class Server extends Thread {
+    private static Socket socket;
     public static String[] quizzes;
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(4242);
+            int counter = 0;
             System.out.println("Waiting for the client to connect...");
-            Socket socket = serverSocket.accept();
-            System.out.println("Client Connected!");
+            while (true) {
+                counter++;
+                socket = serverSocket.accept();
+                System.out.println(counter + "Client Connected!");
+                Thread clientThread = new Thread();
+                clientThread.start();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void run() {
+        try {
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter pw = new PrintWriter(socket.getOutputStream());
             System.out.println("before tOrS");
@@ -20,6 +33,8 @@ public class Server {
             System.out.println("after tOrS");
             String logOrSin = br.readLine();
             System.out.println(logOrSin);
+
+
             if (logOrSin.equals("new")) {
                 String username = br.readLine();
                 String password = br.readLine();
@@ -40,7 +55,33 @@ public class Server {
                 String enterPass = br.readLine();
                 System.out.println(enterUser + enterPass);
                 if (teacherOrStudent.equals("Student")) {
+                    ArrayList<String> lines = readFromFile("StudentLogins.txt");
+                    for (int i = 0; i < lines.size(); i++) {
+                        if (lines.get(i).contains(enterUser) && lines.get(i).contains(enterPass)) {
+                            username = enterUser;
+                            password = enterPass;
+                            break;
+                        }
+                    }
+                    if (username.equals(enterUser) && password.equals(enterPass)) {
+                        pw.write("Success");
+                        pw.println();
+                        pw.flush();
+                        System.out.println("Written sucess");
+                    } else {
+                        pw.write("Failed");
+                        pw.println();
+                        pw.flush();
+                        System.out.println("Written failed");
+                    }
+                    String studentDash = br.readLine();
+                    System.out.println("Recieved student dash choice: " + studentDash);
+                    if (studentDash.equals("Take a quiz")) {
 
+                    }
+                    if (studentDash.equals("View quiz grades")) {
+
+                    }
                 } else if (teacherOrStudent.equals("Teacher")) {
                     ArrayList<String> lines = readFromFile("TeacherLogins.txt");
                     for (int i = 0; i < lines.size(); i++) {
@@ -86,7 +127,7 @@ public class Server {
                                 quizName = quizName.replaceAll(" ", "_");
                                 System.out.println("Replaced blanks in quiz name");
                             }
-                            writeToFile("Quizzes.txt", true, courseName +" " + quizFile+" "+quizName+ " "+ questionNum+ " " + random);
+                            writeToFile("Quizzes.txt", true, courseName + " " + quizFile + " " + quizName + " " + questionNum + " " + random);
 
                             pw.write("W");
                             pw.println();
@@ -94,7 +135,7 @@ public class Server {
                             System.out.println("wrote success");
                         }
                         if (editAction.equals("Delete a quiz")) {
-                           String quizName = br.readLine();
+                            String quizName = br.readLine();
                             System.out.println("Recieved quiz name from client");
                             ArrayList<String> lines2 = readFromFile("Quizzes.txt");
                             try (PrintWriter tpw = new PrintWriter(new BufferedWriter(new FileWriter("Quizzes.txt", false)))) {
@@ -141,11 +182,10 @@ public class Server {
             } else {
                 System.out.println("Error");
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public static void writeToFile(String filename, boolean append, String message) {
         try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename, append)))) {
