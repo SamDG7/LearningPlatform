@@ -7,9 +7,7 @@ import java.util.ArrayList;
 public class Client {
     public static String username;
     public static String password;
-    public static Object[] courses;
     public static String courseName;
-    public static String[] quizzes;
     public static Object quizName;
 
     public static void main(String[] args) {
@@ -20,12 +18,24 @@ public class Client {
             JOptionPane.showMessageDialog(null, "Welcome!",
                     "Brightspace", JOptionPane.INFORMATION_MESSAGE);
             hostName = JOptionPane.showInputDialog(null,
-                    "Please enter host name", "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                    "Please enter host name", "Brightppace", JOptionPane.QUESTION_MESSAGE);
+            if (hostName == null) {
+                JOptionPane.showConfirmDialog(null,
+                        "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                return;
+            }
         } while (hostName.equals(""));
 
+
         do {
-            portNum = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    "Please enter port number", "Brightspace", JOptionPane.QUESTION_MESSAGE));
+            try {
+                portNum = Integer.parseInt(JOptionPane.showInputDialog(null,
+                        "Please enter port number", "Brightspace", JOptionPane.QUESTION_MESSAGE));
+            } catch (NumberFormatException e) {
+                JOptionPane.showConfirmDialog(null,
+                        "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                return;
+            }
         } while (portNum == -1);
 
         try {
@@ -70,18 +80,10 @@ public class Client {
 
             Object newOrLogin;
             String[] logInOptions = {"Create an Account", "Log In", "Exit"};
-            do {
-                newOrLogin = JOptionPane.showInputDialog(null,
-                        "Would you like to create an account? \nOr log in to an existing one?", "Brightspace",
-                        JOptionPane.INFORMATION_MESSAGE, null,
-                        logInOptions, logInOptions[2]);
-                if (newOrLogin == logInOptions[2]) {
-                    JOptionPane.showConfirmDialog(null,
-                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                    return;
-                }
-            } while (newOrLogin == logInOptions[2]);
-
+            newOrLogin = JOptionPane.showInputDialog(null,
+                    "Would you like to create an account? \nOr log in to an existing one?", "Brightspace",
+                    JOptionPane.INFORMATION_MESSAGE, null,
+                    logInOptions, logInOptions[2]);
             if (newOrLogin == logInOptions[0]) {
                 pw.write("new");
                 pw.println();
@@ -135,17 +137,39 @@ public class Client {
                                 "Brightspace", JOptionPane.DEFAULT_OPTION);
                     }
                 } while (!login);
+            } else if (newOrLogin == logInOptions[2]) {
+                JOptionPane.showConfirmDialog(null,
+                        "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                return;
             }
-            if (teachOrStu == accountOptions[0] && login) {
-                
 
+            if (teachOrStu == accountOptions[0] && login) {
+                Object studentAction;
+                String[] studentDash = {"Take a quiz", "View quiz grades", "Exit"};
+                studentAction = JOptionPane.showInputDialog(null,
+                        "Welcome! What would you like to do?", "Brightspace",
+                        JOptionPane.INFORMATION_MESSAGE, null,
+                        studentDash, studentDash[2]);
+                pw.write((String) studentAction);
+                pw.println();
+                pw.flush();
+                if (studentAction == studentDash[0]) {
+
+                }
+                if (studentAction == studentDash[1]) {
+
+                }
+                if (studentAction == studentDash[2]) {
+                    JOptionPane.showConfirmDialog(null,
+                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                }
             }  else if (teachOrStu == accountOptions[1] && login) {
                 Object teacherAction;
                 String[] teacherDash = {"Create a course", "Edit a course", "Remove a course", "Exit"};
                 teacherAction = JOptionPane.showInputDialog(null,
                         "Welcome! What would you like to do?", "Brightspace",
                         JOptionPane.INFORMATION_MESSAGE, null,
-                        teacherDash, teacherDash[4]);
+                        teacherDash, teacherDash[3]);
                 pw.write((String) teacherAction);
                 pw.println();
                 pw.flush();
@@ -195,10 +219,7 @@ public class Client {
                                 "Would you like the question order to be randomized?", "Brightspace",
                                 JOptionPane.INFORMATION_MESSAGE, null,
                                 randomYN, randomYN[2]);
-                        boolean random = false;
-                        if (temp == randomYN[0]) {
-                            random = true;
-                        }
+                        boolean random = temp == randomYN[0];
                         pw.write(quizFile);
                         pw.println();
                         pw.write(quizName);
@@ -221,13 +242,11 @@ public class Client {
                         }
                     }
                     if (editAction == editOptions[1]) {
-                        ArrayList<String> lines2 = new ArrayList<>();
                         ArrayList<String> quizzes = new ArrayList<>();
                         try (BufferedReader tbr = new BufferedReader(new FileReader("Quizzes.txt"))) {
                             String line;
                             System.out.println("Quizzes: ");
                             while ((line = tbr.readLine()) != null) {
-                                lines2.add(line);
                                 line = line.substring(line.indexOf(' ') + 1);
                                 line = line.substring((line.indexOf(' ') + 1));
                                 line = line.substring(0, line.indexOf(' '));
@@ -257,6 +276,11 @@ public class Client {
                                     "An error occurred while deleting your quiz.\nPlease select OK to try again.",
                                     "Brightspace", JOptionPane.DEFAULT_OPTION);
                         }
+                    }
+                    if (editAction == editOptions[2]) {
+                        JOptionPane.showConfirmDialog(null,
+                                "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                        return;
                     }
 
                 }
