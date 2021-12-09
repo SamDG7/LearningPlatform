@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Client {
+    //fields
     public static String username;
     public static String password;
     public static String courseName;
@@ -19,6 +20,7 @@ public class Client {
         String hostName;
         int portNum;
         Socket socket = null;
+        //general welcome message 
         do {
             JOptionPane.showMessageDialog(null, "Welcome!",
                     "Brightspace", JOptionPane.INFORMATION_MESSAGE);
@@ -31,7 +33,7 @@ public class Client {
             }
         } while (hostName.equals(""));
 
-
+        //port number is inputted and dialog persists until 4242 is inputted 
         do {
             try {
                 portNum = Integer.parseInt(JOptionPane.showInputDialog(null,
@@ -41,8 +43,8 @@ public class Client {
                         "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                 return;
             }
-        } while (portNum == -1);
-
+        } while (portNum == null);
+        
         try {
             try {
                 socket = new Socket(hostName, portNum);
