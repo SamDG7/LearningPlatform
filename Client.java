@@ -272,9 +272,9 @@ public class Client {
                         content.add(panel);
                     }
                     System.out.println("question loop finished");
-
-
-
+                    JOptionPane.showConfirmDialog(null,
+                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                    return;
                 }
                 if (studentAction == studentDash[1]) {
                     ArrayList<String> courses = new ArrayList<>();
@@ -626,6 +626,9 @@ public class Client {
                     content.add(lowerPanel, BorderLayout.SOUTH);
                     content.add(panel);
                     System.out.println("question loop finished");
+                    JOptionPane.showConfirmDialog(null,
+                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                    return;
                 }
                 if (teacherAction == teacherDash[4]) {
                     JOptionPane.showConfirmDialog(null,
