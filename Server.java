@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Server extends Thread {
     private static Socket socket;
-    public static String[] quizzes;
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(4242);
@@ -16,7 +15,8 @@ public class Server extends Thread {
                 counter++;
                 socket = serverSocket.accept();
                 System.out.println(counter + "Client Connected!");
-                Thread clientThread = new Thread();
+                Server server = new Server();
+                Thread clientThread = new Thread(server);
                 clientThread.start();
             }
         } catch (Exception e) {
@@ -27,6 +27,9 @@ public class Server extends Thread {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter pw = new PrintWriter(socket.getOutputStream());
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+
             System.out.println("before tOrS");
             String teacherOrStudent = br.readLine();
             System.out.println(teacherOrStudent);
@@ -77,10 +80,67 @@ public class Server extends Thread {
                     String studentDash = br.readLine();
                     System.out.println("Recieved student dash choice: " + studentDash);
                     if (studentDash.equals("Take a quiz")) {
+                        String courseName = br.readLine();
+                        System.out.println("Recieved course name from client");
+                        Course course = new Course(courseName);
+                        ArrayList<String> quizNames = course.getQuizzes();
+                        oos.writeObject(quizNames);
+                        System.out.println("sent list of quizzes to client");
+                        String quizName = br.readLine();
+                        System.out.println("recieved quiz name from client");
+                        ArrayList<String> quizzes = readFromFile("Quizzes.txt");
+                        String line = "";
+                        for (int i = 0; i < quizzes.size(); i++) {
+                            if (quizzes.get(i).contains(quizName) && quizzes.get(i).contains(courseName)) {
+                                line = quizzes.get(i);
+                            }
+                        }
+                        line = line.substring(line.indexOf(' ') + 1);
+                        String quizFile = line.substring(0, line.indexOf(' '));
+                        line = line.substring(line.indexOf(' ') + 1);
+                        line = line.substring(line.indexOf(' ') + 1);
+                        int questionNum = Integer.parseInt(line.substring(0, line.indexOf(' ')));
+                        line = line.substring(line.indexOf(' ') + 1);
+                        boolean bool = Boolean.parseBoolean(line);
+                        Quiz quiz = new Quiz(quizFile, questionNum, quizName, bool);
+                        ArrayList<String> questions = quiz.readFile();
+                        oos.writeObject(questions);
+                        oos.flush();
+                        System.out.println("Sent questions to client");
+                        ArrayList<String> questionAnswers = (ArrayList<String>) ois.readObject();
+                        try (PrintWriter tpw = new PrintWriter(new BufferedWriter(new FileWriter("GradedQuizzes.txt", true)))) {
+                            System.out.println("writing to graded quizzes");
+                            tpw.write(courseName + " " + quizName + " " + quizFile + " " + username + " ");
+                            for (int i = 0; i < questionAnswers.size(); i++) {
+                                if (i != questionAnswers.size() - 1) {
+                                    System.out.println("written first answers");
+                                    tpw.write(questionAnswers.get(i) + " ");
+                                } else {
+                                    System.out.println("written alst answer");
+                                    tpw.write(questionAnswers.get(i));
+                                }
+                            }
+                            tpw.println();
+                            tpw.flush();
+                            System.out.println("Message has been written to file");
+                        } catch (IOException e) {
+                            JOptionPane.showConfirmDialog(null,
+                                    "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                            e.printStackTrace();
+                        }
+
+
 
                     }
                     if (studentDash.equals("View quiz grades")) {
-
+                        ArrayList<String> courses = readFromFile("Courses.txt");
+                        oos.writeObject(courses);
+                        String courseName = br.readLine();
+                        System.out.println("Recieved course name from client");
+                        Course course = new Course(courseName);
+                        ArrayList<String> gradedQuizzes = readFromFile("GradedByTeacher.txt");
+                        oos.writeObject(gradedQuizzes);
+                        oos.flush();
                     }
                 } else if (teacherOrStudent.equals("Teacher")) {
                     ArrayList<String> lines = readFromFile("TeacherLogins.txt");
@@ -176,6 +236,63 @@ public class Server extends Thread {
                         pw.println();
                         pw.flush();
                         System.out.println("wrote success to client");
+                    }
+                    if (teacherDash.equals("Grade A Quiz")) {
+                        ArrayList<String> courses = readFromFile("Courses.txt");
+                        oos.writeObject(courses);
+                        String courseName = br.readLine();
+                        System.out.println("Recieved course name from client");
+                        Course course = new Course(courseName);
+                        ArrayList<String> gradedQuizzes = course.getGradedQuizzes();
+                        ArrayList<String> quizNames = new ArrayList<>();
+                        String tempUser;
+                        String quizName;
+                        for (int i = 0; i < gradedQuizzes.size(); i++) {
+                            quizName = gradedQuizzes.get(i).substring(0, gradedQuizzes.get(i).indexOf(' '));
+                            String line = gradedQuizzes.get(i).substring(gradedQuizzes.get(i).indexOf(' ') + 1);
+                            System.out.println(line);
+                            tempUser = line.substring(0, line.indexOf(' '));
+                            System.out.println(tempUser);
+                            quizNames.add(tempUser + " - " + quizName);
+                        }
+                        oos.writeObject(quizNames);
+                        String quizNameAndUser = br.readLine();
+                        String line = quizNameAndUser.substring(quizNameAndUser.indexOf(' ') + 1);
+                        line = line.substring(line.indexOf(' ') + 1);
+                        String quizN = line;
+                        ArrayList<String> quizzes = readFromFile("GradedQuizzes.txt");
+                        String fileName = "";
+                        ArrayList<String> studentAnswers = new ArrayList<>();
+                        for (int i = 0; i < quizzes.size(); i++) {
+                            String temp;
+                            if (quizzes.get(i).contains(quizN) && quizzes.get(i).contains(courseName)) {
+                               temp = quizzes.get(i).substring(quizzes.get(i).indexOf(' ') + 1);
+                               temp = temp.substring(temp.indexOf(' ') + 1);
+                               fileName = temp.substring(0, temp.indexOf(' '));
+                               temp = temp.substring(temp.indexOf(' ') + 1);
+                               temp = temp.substring(temp.indexOf(' ') + 1);
+                               int numSpaces = 0;
+                               for (int j = 0; j < temp.length(); j++) {
+                                   if (temp.charAt(i) == ' ') {
+                                       numSpaces++;
+                                   }
+                               }
+                               numSpaces += 2;
+                                System.out.println(numSpaces);
+                                System.out.println(temp);
+                               for (int j = 0; j < numSpaces; j++) {
+                                   studentAnswers.add(String.valueOf(temp.charAt(i)));
+                                   System.out.println(String.valueOf(temp.charAt(i)));
+                                   temp = temp.substring(temp.indexOf(' ') + 1);
+                               }
+                               break;
+                            }
+                        }
+                        ArrayList<String> quizQuestions = readFromFile(fileName);
+                        oos.writeObject(quizQuestions);
+                        oos.writeObject(studentAnswers);
+                        String numCorrect = br.readLine();
+                        writeToFile("GradedByTeacher.txt", true, quizNameAndUser + " " + numCorrect + "/" + quizQuestions.size());
                     }
 
                 }
