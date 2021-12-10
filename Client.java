@@ -656,9 +656,6 @@ public class Client {
                     content.add(lowerPanel, BorderLayout.SOUTH);
                     content.add(panel);
                     System.out.println("question loop finished");
-                    JOptionPane.showConfirmDialog(null,
-                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                    return;
                 }
                 //exit option
                 if (teacherAction == teacherDash[4]) {
