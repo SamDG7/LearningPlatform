@@ -3,6 +3,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Server extends Thread {
     private static Socket socket;
@@ -104,6 +105,9 @@ public class Server extends Thread {
                         boolean bool = Boolean.parseBoolean(line);
                         Quiz quiz = new Quiz(quizFile, questionNum, quizName, bool);
                         ArrayList<String> questions = quiz.readFile();
+                        if (bool) {
+                            Collections.shuffle(questions);
+                        }
                         oos.writeObject(questions);
                         oos.flush();
                         System.out.println("Sent questions to client");
