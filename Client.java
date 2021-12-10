@@ -62,6 +62,7 @@ public class Client {
 
             Object teachOrStu;
             boolean login = false;
+            // login
             String[] accountOptions = {"Student", "Teacher", "Exit"};
             //JOption that allows users to pick between student and teacher and exiting the program
             do {
