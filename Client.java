@@ -5,7 +5,10 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Client {
     //fields
@@ -62,7 +65,6 @@ public class Client {
 
             Object teachOrStu;
             boolean login = false;
-            // login
             String[] accountOptions = {"Student", "Teacher", "Exit"};
             //JOption that allows users to pick between student and teacher and exiting the program
             do {
@@ -272,6 +274,7 @@ public class Client {
                             System.out.println("Sent answers to server");
                         }
                     });
+
                     //answers get submitted to server
                     lowerPanel.add(submitButton);
                     content.add(lowerPanel, BorderLayout.SOUTH);
@@ -407,6 +410,7 @@ public class Client {
                     if (editAction == null) {
                         JOptionPane.showConfirmDialog(null,
                                 "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                        return;
                     }
                     pw.write(courseName);
                     pw.println();
@@ -669,3 +673,8 @@ public class Client {
         }
     }
 }
+
+
+
+
+
