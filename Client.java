@@ -6,7 +6,6 @@ import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Client {
     //fields
@@ -20,7 +19,7 @@ public class Client {
         String hostName;
         int portNum;
         Socket socket = null;
-        //general welcome message 
+        //general welcome message
         do {
             JOptionPane.showMessageDialog(null, "Welcome!",
                     "Brightspace", JOptionPane.INFORMATION_MESSAGE);
@@ -33,7 +32,7 @@ public class Client {
             }
         } while (hostName.equals(""));
 
-        //port number is inputted and dialog persists until 4242 is inputted 
+        //port number is inputted and dialog persists until 4242 is inputted
         do {
             try {
                 portNum = Integer.parseInt(JOptionPane.showInputDialog(null,
@@ -43,7 +42,7 @@ public class Client {
                         "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                 return;
             }
-        } while (portNum == null);
+        } while (portNum == -1);
         //try catch for port number that is not 4242
         try {
             try {
@@ -82,14 +81,14 @@ public class Client {
                 pw.println();
                 pw.flush();
                 System.out.println("written student");
-            //picking 1=teacher
+                //picking 1=teacher
             } else if (teachOrStu == accountOptions[1]) {
                 pw.write("Teacher");
                 pw.println();
                 pw.flush();
                 System.out.println("written teacher");
             }
-            
+
             //JOption pane that lets user decide to log into an account or create one
             Object newOrLogin;
             String[] logInOptions = {"Create an Account", "Log In", "Exit"};
@@ -118,14 +117,14 @@ public class Client {
                     JOptionPane.showConfirmDialog(null,
                             "You have successfully created your account!\nPlease select OK and restart the program.",
                             "Brightspace", JOptionPane.DEFAULT_OPTION);
-                //Program quits if username/password are null and user needs to re-attempt to create account
+                    //Program quits if username/password are null and user needs to re-attempt to create account
                 } else {
                     JOptionPane.showConfirmDialog(null,
                             "You have failed to create your account.\nPlease select OK to try again.",
                             "Brightspace", JOptionPane.DEFAULT_OPTION);
                     return;
                 }
-            //1=returning user
+                //1=returning user
             } else if (newOrLogin == logInOptions[1]) {
                 pw.write("returning");
                 pw.println();
@@ -143,14 +142,14 @@ public class Client {
                     pw.println();
                     pw.flush();
                     System.out.println("Written username and password");
-                    
+
                     //if inputted username and password is equal to stored username/password login is deemed successful
                     if (br.readLine().equals("Success")) {
                         login = true;
                         JOptionPane.showConfirmDialog(null,
                                 "You have successfully logged into your account!\nPlease select OK to continue.",
                                 "Brightspace", JOptionPane.DEFAULT_OPTION);
-                    //if username or password do not match with stored info, login is deemed unsuccessful
+                        //if username or password do not match with stored info, login is deemed unsuccessful
                     } else {
                         JOptionPane.showConfirmDialog(null,
                                 "You have entered an incorrect username or password.\nPlease select OK to try again.",
@@ -158,7 +157,7 @@ public class Client {
                         return;
                     }
                 } while (!login);
-            //option 2=exiting the program
+                //option 2=exiting the program
             } else if (newOrLogin == logInOptions[2]) {
                 JOptionPane.showConfirmDialog(null,
                         "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
@@ -246,7 +245,7 @@ public class Client {
                     for (int i = 0; i < temp2.size(); i++) {
                         questions[i] = temp2.get(i);
                     }
-                    
+
                     System.out.println("got questions from server");
                     JFrame frame = new JFrame((String) quizName);
                     Container content = frame.getContentPane();
@@ -292,15 +291,12 @@ public class Client {
                         content.add(panel);
                     }
                     System.out.println("question loop finished");
-                    JOptionPane.showConfirmDialog(null,
-                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                    return;
                 }
                 //if student picks view graded quizzes below code executes
                 if (studentAction == studentDash[1]) {
                     ArrayList<String> courses = new ArrayList<>();
                     try {
-                       courses = (ArrayList<String>) ois.readObject();
+                        courses = (ArrayList<String>) ois.readObject();
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -351,13 +347,13 @@ public class Client {
                             "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                     return;
 
-                //if student selects 2, program exits
+                    //if student selects 2, program exits
                 }
                 if (studentAction == studentDash[2]) {
                     JOptionPane.showConfirmDialog(null,
                             "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                 }
-               //if user is a teacher and login is successful dashboard appears
+                //if user is a teacher and login is successful dashboard appears
             }  else if (teachOrStu == accountOptions[1] && login) {
                 Object teacherAction;
                 String[] teacherDash = {"Create a course", "Edit a course", "Remove a course", "Grade A Quiz", "Exit"};
@@ -604,7 +600,7 @@ public class Client {
                     pw.flush();
                     ArrayList<String> quizQuestions = new ArrayList<>();
                     try {
-                       quizQuestions = (ArrayList<String>) ois.readObject();
+                        quizQuestions = (ArrayList<String>) ois.readObject();
                     } catch (ClassNotFoundException cnfe) {
                         cnfe.printStackTrace();
                     }
@@ -648,7 +644,8 @@ public class Client {
                         panel.add(jLabel1);
                         content.add(panel);
                     }
-
+                    JLabel jLabel = new JLabel("Enter number correct: ");
+                    lowerPanel.add(jLabel);
                     lowerPanel.add(numCorrect);
                     lowerPanel.add(submitButton);
                     content.add(lowerPanel, BorderLayout.SOUTH);
