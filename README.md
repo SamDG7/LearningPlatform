@@ -13,7 +13,7 @@ Extra Submitted Files
 -----------------------------------------------------------------------------------------------------------
 README.md (this file)
 Tests.md
-quizfiles
+examplequiz.txt
 -----------------------------------------------------------------------------------------------------------
 Pooja Mathi will be submitting the Project and other items related through Vocareum and Brightspace.
 -----------------------------------------------------------------------------------------------------------
