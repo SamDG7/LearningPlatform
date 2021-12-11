@@ -105,7 +105,7 @@ public class Client {
                     //Account is created if username and password are not null
                     if (br.readLine().equals("Success")) {
                         JOptionPane.showConfirmDialog(null,
-                                "You have successfully created your account!\nPlease select OK and restart the program.",
+                                "You have successfully created your account!\nPlease select OK.",
                                 "Brightspace", JOptionPane.DEFAULT_OPTION);
                         //Program quits if username/password are null and user needs to re-attempt to create account
                     } else {
