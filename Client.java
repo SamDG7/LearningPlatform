@@ -74,74 +74,89 @@ public class Client {
             //JOption pane that lets user decide to log into an account or create one
             Object newOrLogin;
             String[] logInOptions = {"Create an Account", "Log In", "Exit"};
-            newOrLogin = JOptionPane.showInputDialog(null,
-                    "Would you like to create an account? \nOr log in to an existing one?", "Brightspace",
-                    JOptionPane.INFORMATION_MESSAGE, null,
-                    logInOptions, logInOptions[2]);
-            //0=new account
-            //entered usernames and passwords are stored
-            if (newOrLogin == logInOptions[0]) {
-                pw.write("new");
-                pw.println();
-                pw.flush();
-                username = JOptionPane.showInputDialog(null, "Please enter a username.",
-                        "Brightspace", JOptionPane.QUESTION_MESSAGE);
-                password = JOptionPane.showInputDialog(null, "Please enter a password.",
-                        "Brightspace", JOptionPane.QUESTION_MESSAGE);
-                pw.write(username);
-                pw.println();
-                pw.write(password);
-                pw.println();
-                pw.flush();
-                //Account is created if username and password are not null
-                if (br.readLine().equals("Success")) {
-                    JOptionPane.showConfirmDialog(null,
-                            "You have successfully created your account!\nPlease select OK and restart the program.",
-                            "Brightspace", JOptionPane.DEFAULT_OPTION);
-                    //Program quits if username/password are null and user needs to re-attempt to create account
-                } else {
-                    JOptionPane.showConfirmDialog(null,
-                            "You have failed to create your account.\nPlease select OK to try again.",
-                            "Brightspace", JOptionPane.DEFAULT_OPTION);
-                    return;
-                }
-                //1=returning user
-            } else if (newOrLogin == logInOptions[1]) {
-                pw.write("returning");
-                pw.println();
-                pw.flush();
-                //JOption pane for inputting username and password
-                do {
-                    String enterUser = JOptionPane.showInputDialog(null, "Please enter your username.",
-                            "Brightspace", JOptionPane.QUESTION_MESSAGE);
-                    String enterPass = JOptionPane.showInputDialog(null, "Please enter your password.",
-                            "Brightspace", JOptionPane.QUESTION_MESSAGE);
-                    pw.write(enterUser);
+            Boolean newAccount = false;
+            do {
+                newOrLogin = JOptionPane.showInputDialog(null,
+                        "Would you like to create an account? \nOr log in to an existing one?", "Brightspace",
+                        JOptionPane.INFORMATION_MESSAGE, null,
+                        logInOptions, logInOptions[2]);
+                //0=new account
+                //entered usernames and passwords are stored
+
+                if (newOrLogin == logInOptions[0]) {
+                    newAccount = true;
+                    pw.write("new");
                     pw.println();
-                    pw.write(enterPass);
+                    pw.flush();
+                    username = JOptionPane.showInputDialog(null, "Please enter a username.",
+                            "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                    password = JOptionPane.showInputDialog(null, "Please enter a password.",
+                            "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                    pw.write(username);
+                    pw.println();
+                    pw.write(password);
+                    pw.println();
+                    pw.flush();
+                    pw.write(String.valueOf(newAccount));
+                    System.out.println("written " + newAccount);
                     pw.println();
                     pw.flush();
 
-                    //if inputted username and password is equal to stored username/password login is deemed successful
+                    //Account is created if username and password are not null
                     if (br.readLine().equals("Success")) {
-                        login = true;
                         JOptionPane.showConfirmDialog(null,
-                                "You have successfully logged into your account!\nPlease select OK to continue.",
+                                "You have successfully created your account!\nPlease select OK and restart the program.",
                                 "Brightspace", JOptionPane.DEFAULT_OPTION);
-                        //if username or password do not match with stored info, login is deemed unsuccessful
+                        //Program quits if username/password are null and user needs to re-attempt to create account
                     } else {
                         JOptionPane.showConfirmDialog(null,
-                                "You have entered an incorrect username or password.\nPlease select OK to try again.",
+                                "You have failed to create your account.\nPlease select OK to try again.",
                                 "Brightspace", JOptionPane.DEFAULT_OPTION);
                         return;
                     }
-                } while (!login);
-                //option 2=exiting the program
-            } else if (newOrLogin == logInOptions[2]) {
-                JOptionPane.showConfirmDialog(null,
-                        "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
+                    //1=returning user
+                } else if (newOrLogin == logInOptions[1]) {
+                    newAccount = false;
+                    pw.write("returning");
+                    pw.println();
+                    pw.flush();
+                    //JOption pane for inputting username and password
+                    do {
+                        String enterUser = JOptionPane.showInputDialog(null, "Please enter your username.",
+                                "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                        String enterPass = JOptionPane.showInputDialog(null, "Please enter your password.",
+                                "Brightspace", JOptionPane.QUESTION_MESSAGE);
+                        pw.write(enterUser);
+                        pw.println();
+                        pw.write(enterPass);
+                        pw.println();
+                        pw.flush();
+                        pw.write(String.valueOf(newAccount));
+                        System.out.println("written " + newAccount);
+                        pw.println();
+                        pw.flush();
+
+                        //if inputted username and password is equal to stored username/password login is deemed successful
+                        if (br.readLine().equals("Success")) {
+                            login = true;
+                            JOptionPane.showConfirmDialog(null,
+                                    "You have successfully logged into your account!\nPlease select OK to continue.",
+                                    "Brightspace", JOptionPane.DEFAULT_OPTION);
+                            //if username or password do not match with stored info, login is deemed unsuccessful
+                        } else {
+                            JOptionPane.showConfirmDialog(null,
+                                    "You have entered an incorrect username or password.\nPlease select OK to try again.",
+                                    "Brightspace", JOptionPane.DEFAULT_OPTION);
+                            return;
+                        }
+                    } while (!login);
+                    //option 2=exiting the program
+                } else if (newOrLogin == logInOptions[2]) {
+                    JOptionPane.showConfirmDialog(null,
+                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+            } while (newAccount);
             //if login is successful on the student side, this code executes
             if (teachOrStu == accountOptions[0] && login) {
                 Object studentAction;
