@@ -33,7 +33,114 @@ public class Server extends Thread {
     private static boolean append;
     private static String message;
     private static ArrayList<String> quizQuestions;
-    
+
+    public static synchronized Socket getSocket() {
+        return socket;
+    }
+
+    public static synchronized String getCourseName() {
+        return courseName;
+    }
+
+    public static synchronized String getUsername() {
+        return username;
+    }
+
+    public static synchronized String getPassword() {
+        return password;
+    }
+
+    public static synchronized String getEnterUser() {
+        return enterUser;
+    }
+
+    public static synchronized String getEnterPass() {
+        return enterPass;
+    }
+
+    public static synchronized ArrayList<String> getQuizNames() {
+        return quizNames;
+    }
+
+    public static synchronized String getQuizFile() {
+        return quizFile;
+    }
+
+    public static synchronized int getQuestionNum() {
+        return questionNum;
+    }
+
+    public static synchronized String getQuizName() {
+        return quizName;
+    }
+
+    public static synchronized boolean isNewAccount() {
+        return newAccount;
+    }
+
+    public static synchronized ArrayList<String> getQuestions() {
+        return questions;
+    }
+
+    public static synchronized boolean isBool() {
+        return bool;
+    }
+
+    public static synchronized String getTempUser() {
+        return tempUser;
+    }
+
+    public static synchronized Object getEditAction() {
+        return editAction;
+    }
+
+    public static synchronized Object getStudentAction() {
+        return studentAction;
+    }
+
+    public static synchronized Object getTeacherAction() {
+        return teacherAction;
+    }
+
+    public static synchronized ArrayList<String> getCourses() {
+        return courses;
+    }
+
+    public static synchronized int getNumSpaces() {
+        return numSpaces;
+    }
+
+    public static synchronized String getTemp() {
+        return temp;
+    }
+
+    public static synchronized ArrayList<String> getLines2() {
+        return lines2;
+    }
+
+    public static synchronized String getLine() {
+        return line;
+    }
+
+    public static synchronized ArrayList<String> getGradedQuizzes() {
+        return gradedQuizzes;
+    }
+
+    public static synchronized String getFilename() {
+        return filename;
+    }
+
+    public static synchronized boolean isAppend() {
+        return append;
+    }
+
+    public static synchronized String getMessage() {
+        return message;
+    }
+
+    public static synchronized ArrayList<String> getQuizQuestions() {
+        return quizQuestions;
+    }
 
     public static void main(String[] args) {
         try {
