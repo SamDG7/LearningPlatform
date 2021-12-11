@@ -33,7 +33,10 @@
 6. User selects "Add A quiz"
 7. User selects the course they would like to add the quiz to
 8. User types in the filename that contains the quiz.
-9. User is notified that the quiz was successfully created
+9. User types in the name of the quiz
+10. User types in the number of questions in the quiz
+11. User selects weather they would like the quiz to be random or not
+12. User is notified that the quiz was successfully created
 
 **Test 5: Teacher Deletes A Quiz**
 1. User launches the application
