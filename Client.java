@@ -21,8 +21,8 @@ public class Client {
     public static void main(String[] args) {
         Socket socket = null;
         //general welcome message
-            JOptionPane.showMessageDialog(null, "Welcome!",
-                    "Brightspace", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Welcome!",
+                "Brightspace", JOptionPane.INFORMATION_MESSAGE);
 
         //try catch for port number that is not 4242
         try {
@@ -45,32 +45,30 @@ public class Client {
             boolean login = false;
             String[] accountOptions = {"Student", "Teacher", "Exit"};
             //JOption that allows users to pick between student and teacher and exiting the program
-                teachOrStu = JOptionPane.showInputDialog(null,
-                        "Are you a student or teacher?", "Brightspace",
-                        JOptionPane.INFORMATION_MESSAGE, null,
-                        accountOptions, accountOptions[2]);
-                if (teachOrStu == accountOptions[2]) {
-                    JOptionPane.showConfirmDialog(null,
-                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                    return;
-                }
-                if (teachOrStu == null) {
-                    JOptionPane.showConfirmDialog(null,
-                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                    return;
-                }
+            teachOrStu = JOptionPane.showInputDialog(null,
+                    "Are you a student or teacher?", "Brightspace",
+                    JOptionPane.INFORMATION_MESSAGE, null,
+                    accountOptions, accountOptions[2]);
+            if (teachOrStu == accountOptions[2]) {
+                JOptionPane.showConfirmDialog(null,
+                        "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                return;
+            }
+            if (teachOrStu == null) {
+                JOptionPane.showConfirmDialog(null,
+                        "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                return;
+            }
             //picking 0=student
             if (teachOrStu == accountOptions[0]) {
                 pw.write("Student");
                 pw.println();
                 pw.flush();
-                System.out.println("written student");
                 //picking 1=teacher
             } else if (teachOrStu == accountOptions[1]) {
                 pw.write("Teacher");
                 pw.println();
                 pw.flush();
-                System.out.println("written teacher");
             }
 
             //JOption pane that lets user decide to log into an account or create one
@@ -86,7 +84,6 @@ public class Client {
                 pw.write("new");
                 pw.println();
                 pw.flush();
-                System.out.println("written new");
                 username = JOptionPane.showInputDialog(null, "Please enter a username.",
                         "Brightspace", JOptionPane.QUESTION_MESSAGE);
                 password = JOptionPane.showInputDialog(null, "Please enter a password.",
@@ -113,7 +110,6 @@ public class Client {
                 pw.write("returning");
                 pw.println();
                 pw.flush();
-                System.out.println("written returning");
                 //JOption pane for inputting username and password
                 do {
                     String enterUser = JOptionPane.showInputDialog(null, "Please enter your username.",
@@ -125,7 +121,6 @@ public class Client {
                     pw.write(enterPass);
                     pw.println();
                     pw.flush();
-                    System.out.println("Written username and password");
 
                     //if inputted username and password is equal to stored username/password login is deemed successful
                     if (br.readLine().equals("Success")) {
@@ -177,7 +172,7 @@ public class Client {
                         e.printStackTrace();
                     }
                     String[] courses = new String[lines.size()];
-                    for (int i = 0; i < lines.size(); i ++) {
+                    for (int i = 0; i < lines.size(); i++) {
                         courses[i] = lines.get(i);
                     }
                     //JOption pane for students to select which course they would like to get into
@@ -282,7 +277,7 @@ public class Client {
                         e.printStackTrace();
                     }
                     String[] coursesActual = new String[courses.size()];
-                    for (int i = 0; i < courses.size(); i ++) {
+                    for (int i = 0; i < courses.size(); i++) {
                         coursesActual[i] = courses.get(i);
                     }
                     //JOption pane that allows student to select a course
@@ -333,7 +328,7 @@ public class Client {
                             "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                 }
                 //if user is a teacher and login is successful dashboard appears
-            }  else if (teachOrStu == accountOptions[1] && login) {
+            } else if (teachOrStu == accountOptions[1] && login) {
                 Object teacherAction;
                 String[] teacherDash = {"Create a course", "Edit a course", "Remove a course", "Grade A Quiz", "Exit"};
                 //JOption pane for teachers to decide to create a course, edit a course, remove a course, grade a quiz, or exit
@@ -507,7 +502,7 @@ public class Client {
                         e.printStackTrace();
                     }
                     String[] courses = new String[lines.size()];
-                    for (int i = 0; i < lines.size(); i ++) {
+                    for (int i = 0; i < lines.size(); i++) {
                         courses[i] = lines.get(i);
                         courseName = (String) JOptionPane.showInputDialog(null,
                                 "Please select a course to remove", "Brightspace",
@@ -536,7 +531,7 @@ public class Client {
                         e.printStackTrace();
                     }
                     String[] coursesActual = new String[courses.size()];
-                    for (int i = 0; i < courses.size(); i ++) {
+                    for (int i = 0; i < courses.size(); i++) {
                         coursesActual[i] = courses.get(i);
                     }
                     courseName = (String) JOptionPane.showInputDialog(null,
@@ -558,7 +553,7 @@ public class Client {
                         e.printStackTrace();
                     }
                     String[] actualQuizzes = new String[quizzesToGrade.size()];
-                    for (int i = 0; i < quizzesToGrade.size(); i ++) {
+                    for (int i = 0; i < quizzesToGrade.size(); i++) {
                         actualQuizzes[i] = quizzesToGrade.get(i);
                     }
                     quizName = JOptionPane.showInputDialog(null,
@@ -639,3 +634,4 @@ public class Client {
             e.printStackTrace();
         }
     }
+}
