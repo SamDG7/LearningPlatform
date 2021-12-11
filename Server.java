@@ -7,6 +7,7 @@ import java.util.Collections;
 
 public class Server extends Thread {
     private static Socket socket;
+
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(4242);
@@ -22,6 +23,7 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
+
     public void run() {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -113,7 +115,6 @@ public class Server extends Thread {
                                     "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                             e.printStackTrace();
                         }
-
 
 
                     }
@@ -274,3 +275,29 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
+    public static void writeToFile(String filename, boolean append, String message) {
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename, append)))) {
+            pw.write(message);
+            pw.println();
+            pw.flush();
+            System.out.println("Message has been written to file");
+        } catch (IOException e) {
+            JOptionPane.showConfirmDialog(null,
+                    "Error occurred writing to file!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+            e.printStackTrace();
+        }
+    }
+    public static ArrayList<String> readFromFile(String filename) {
+        ArrayList<String> lines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line = br.readLine();
+            while (line != null) {
+                lines.add(line);
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+}
