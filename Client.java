@@ -19,37 +19,15 @@ public class Client {
     public static ArrayList<String> questionAnswers = new ArrayList<>();
 
     public static void main(String[] args) {
-        String hostName;
-        int portNum;
         Socket socket = null;
         //general welcome message
-        do {
             JOptionPane.showMessageDialog(null, "Welcome!",
                     "Brightspace", JOptionPane.INFORMATION_MESSAGE);
-            hostName = JOptionPane.showInputDialog(null,
-                    "Please enter host name", "Brightspace", JOptionPane.QUESTION_MESSAGE);
-            if (hostName == null) {
-                JOptionPane.showConfirmDialog(null,
-                        "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-        } while (hostName.equals(""));
 
-        //port number is inputted and dialog persists until 4242 is inputted
-        do {
-            try {
-                portNum = Integer.parseInt(JOptionPane.showInputDialog(null,
-                        "Please enter port number", "Brightspace", JOptionPane.QUESTION_MESSAGE));
-            } catch (NumberFormatException e) {
-                JOptionPane.showConfirmDialog(null,
-                        "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-        } while (portNum == -1);
         //try catch for port number that is not 4242
         try {
             try {
-                socket = new Socket(hostName, portNum);
+                socket = new Socket("localhost", 4242);
                 JOptionPane.showMessageDialog(null, "Connection Esatblished!",
                         "Brightspace", JOptionPane.INFORMATION_MESSAGE);
 
@@ -67,7 +45,6 @@ public class Client {
             boolean login = false;
             String[] accountOptions = {"Student", "Teacher", "Exit"};
             //JOption that allows users to pick between student and teacher and exiting the program
-            do {
                 teachOrStu = JOptionPane.showInputDialog(null,
                         "Are you a student or teacher?", "Brightspace",
                         JOptionPane.INFORMATION_MESSAGE, null,
@@ -77,7 +54,11 @@ public class Client {
                             "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                     return;
                 }
-            } while (teachOrStu == accountOptions[2]);
+                if (teachOrStu == null) {
+                    JOptionPane.showConfirmDialog(null,
+                            "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
             //picking 0=student
             if (teachOrStu == accountOptions[0]) {
                 pw.write("Student");
