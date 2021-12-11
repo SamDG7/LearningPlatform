@@ -144,115 +144,115 @@ public class Server extends Thread {
     
     // the setters
     
-    public static synchronized Socket setSocket() {
-        this.socket = socket;
-    }
-
-    public static synchronized String setCourseName() {
-        this.courseName = courseName;
-    }
-
-    public static synchronized String setUsername() {
-        this.username = username;
-    }
-
-    public static synchronized String setPassword() {
-        this.password = password;
-    }
-
-    public static synchronized String setEnterUser() {
-        this.enterUser = enterUser;
-    }
-
-    public static synchronized String setEnterPass() {
-        this.enterPass = enterPass;
-    }
-
-    public static synchronized ArrayList<String> setQuizNames() {
-        this.quizNames = quizNames;
-    }
-
-    public static synchronized String setQuizFile() {
-        this.quizFile = quizFile;
-    }
-
-    public static synchronized int setQuestionNum() {
-        this.questionNum = questionNum;
-    }
-
-    public static synchronized String setQuizName() {
-        this.quizName = quizName;
-    }
-
-    public static synchronized boolean setNewAccount() {
-        this.newAccount = newAccount;
-    }
-
-    public static synchronized ArrayList<String> setQuestions() {
-        this.questions = questions;
-    }
-
-    public static synchronized boolean setBool() {
-        this.bool = bool;
-    }
-
-    public static synchronized String setTempUser() {
-        this.tempUser = tempUser;
-    }
-
-    public static synchronized Object setEditAction() {
-        this.editAction = editAction;
-    }
-
-    public static synchronized Object setStudentAction() {
-        this.studentAction = studentAction;
-    }
-
-    public static synchronized Object setTeacherAction() {
-        this.teacherAction = teacherAction;
-    }
-
-    public static synchronized ArrayList<String> setCourses() {
-        this.courses = courses;
-    }
-
-    public static synchronized int setNumSpaces() {
-        this.numSpaces = numSpaces;
-    }
-
-    public static synchronized String setTemp() {
-        this.temp = temp;
-    }
-
-    public static synchronized ArrayList<String> setLines2() {
-        this.lines2 = lines2;
-    }
-
-    public static synchronized String setLine() {
-        this.line = line;
-    }
-
-    public static synchronized ArrayList<String> setGradedQuizzes() {
-        this.gradedQuizzes = gradedQuizzes;
-    }
-
-    public static synchronized String setFilename() {
-        this.filename = filename;
-    }
-
-    public static synchronized boolean setAppend() {
-        this.append = append;
-    }
-
-    public static synchronized String setMessage() {
-        this.message = message;
-    }
-
-    public static synchronized ArrayList<String> setQuizQuestions() {
-        this.quizQuestions = quizQuestions;
-    }
+    public static void setSocket(Socket socket) {
+		Testing.socket = socket;
+	}
     
+	public static void setCourseName(String courseName) {
+		Testing.courseName = courseName;
+	}
     
+	public static void setUsername(String username) {
+		Testing.username = username;
+	}
+    
+	public static void setPassword(String password) {
+		Testing.password = password;
+	}
+    
+	public static void setEnterUser(String enterUser) {
+		Testing.enterUser = enterUser;
+	}
+    
+	public static void setEnterPass(String enterPass) {
+		Testing.enterPass = enterPass;
+	}
+    
+	public static void setQuizNames(ArrayList<String> quizNames) {
+		Testing.quizNames = quizNames;
+	}
+    
+	public static void setQuizFile(String quizFile) {
+		Testing.quizFile = quizFile;
+	}
+    
+	public static void setQuestionNum(int questionNum) {
+		Testing.questionNum = questionNum;
+	}
+    
+	public static void setQuizName(String quizName) {
+		Testing.quizName = quizName;
+	}
+    
+	public static void setNewAccount(boolean newAccount) {
+		Testing.newAccount = newAccount;
+	}
+    
+	public static void setQuestions(ArrayList<String> questions) {
+		Testing.questions = questions;
+	}
+    
+	public static void setBool(boolean bool) {
+		Testing.bool = bool;
+	}
+    
+	public static void setTempUser(String tempUser) {
+		Testing.tempUser = tempUser;
+	}
+    
+	public static void setEditAction(Object editAction) {
+		Testing.editAction = editAction;
+	}
+    
+	public static void setStudentAction(Object studentAction) {
+		Testing.studentAction = studentAction;
+	}
+    
+	public static void setTeacherAction(Object teacherAction) {
+		Testing.teacherAction = teacherAction;
+	}
+    
+	public static void setCourses(ArrayList<String> courses) {
+		Testing.courses = courses;
+	}
+    
+	public static void setNumSpaces(int numSpaces) {
+		Testing.numSpaces = numSpaces;
+	}
+    
+	public static void setTemp(String temp) {
+		Testing.temp = temp;
+	}
+    
+	public static void setLines2(ArrayList<String> lines2) {
+		Testing.lines2 = lines2;
+	}
+    
+	public static void setLine(String line) {
+		Testing.line = line;
+	}
+    
+	public static void setGradedQuizzes(ArrayList<String> gradedQuizzes) {
+		Testing.gradedQuizzes = gradedQuizzes;
+	}
+    
+	public static void setFilename(String filename) {
+		Testing.filename = filename;
+	}
+    
+	public static void setAppend(boolean append) {
+		Testing.append = append;
+	}
+    
+	public static void setMessage(String message) {
+		Testing.message = message;
+	}
+    
+	public static void setQuizQuestions(ArrayList<String> quizQuestions) {
+		Testing.quizQuestions = quizQuestions;
+	}
+    
+    // end setters
 
     public static void main(String[] args) {
         try {
