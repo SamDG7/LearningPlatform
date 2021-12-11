@@ -11,9 +11,9 @@ The Client and Server classes are the runner classes, and each user of the appli
 -----------------------------------------------------------------------------------------------------------
 Extra Submitted Files
 -----------------------------------------------------------------------------------------------------------
-README.md (this file)
-Tests.md
-examplequiz.txt
+-README.md (this file)
+-Tests.md
+-examplequiz.txt
 -----------------------------------------------------------------------------------------------------------
 Pooja Mathi will be submitting the Project and other items related through Vocareum and Brightspace.
 -----------------------------------------------------------------------------------------------------------
