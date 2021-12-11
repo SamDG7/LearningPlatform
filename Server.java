@@ -7,6 +7,33 @@ import java.util.Collections;
 
 public class Server extends Thread {
     private static Socket socket;
+    private static String courseName;
+    private static String username;
+    private static String password;
+    private static String enterUser;
+    private static String enterPass;
+    private static ArrayList<String> quizNames;
+    private static String quizFile;
+    private static int questionNum;
+    private static String quizName;
+    private static boolean newAccount;
+    private static ArrayList<String> questions;
+    private static boolean bool;
+    private static String tempUser;
+    private static Object editAction;
+    private static Object studentAction;
+    private static Object teacherAction;
+    private static ArrayList<String> courses;
+    private static int numSpaces;
+    private static String temp;
+    private static ArrayList<String> lines2;
+    private static String line;
+    private static ArrayList<String> gradedQuizzes;
+    private static String filename;
+    private static boolean append;
+    private static String message;
+    private static ArrayList<String> quizQuestions;
+    
 
     public static void main(String[] args) {
         try {
