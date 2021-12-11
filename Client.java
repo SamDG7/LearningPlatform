@@ -172,8 +172,9 @@ public class Client {
                             lines.add(line);
                         }
                     } catch (IOException e) {
+                        JOptionPane.showMessageDialog(null, "Error writing to file",
+                                "Brightspace", JOptionPane.ERROR_MESSAGE);
                         e.printStackTrace();
-                        System.out.println("Error");
                     }
                     String[] courses = new String[lines.size()];
                     for (int i = 0; i < lines.size(); i ++) {
@@ -193,7 +194,6 @@ public class Client {
                     pw.write(courseName);
                     pw.println();
                     pw.flush();
-                    System.out.println("Written course name to file");
                     ArrayList<String> temp = new ArrayList<>();
                     try {
                         temp = (ArrayList<String>) ois.readObject();
@@ -218,7 +218,6 @@ public class Client {
                     pw.write((String) quizName);
                     pw.println();
                     pw.flush();
-                    System.out.println("sent quizname to server");
                     ArrayList<String> temp2 = new ArrayList<>();
                     try {
                         temp2 = (ArrayList<String>) ois.readObject();
@@ -230,7 +229,6 @@ public class Client {
                         questions[i] = temp2.get(i);
                     }
 
-                    System.out.println("got questions from server");
                     JFrame frame = new JFrame((String) quizName);
                     Container content = frame.getContentPane();
                     content.setLayout(new BorderLayout());
@@ -252,7 +250,6 @@ public class Client {
                             } catch (IOException IOE) {
                                 IOE.printStackTrace();
                             }
-                            System.out.println("Sent answers to server");
                         }
                     });
 
@@ -275,7 +272,6 @@ public class Client {
                         });
                         content.add(panel);
                     }
-                    System.out.println("question loop finished");
                 }
                 //if student picks view graded quizzes below code executes
                 if (studentAction == studentDash[1]) {
@@ -302,7 +298,6 @@ public class Client {
                     pw.write(courseName);
                     pw.println();
                     pw.flush();
-                    System.out.println("Written course name to file");
                     ArrayList<String> temp = new ArrayList<>();
                     //try catch for if a course does not exist
                     try {
@@ -327,7 +322,6 @@ public class Client {
                     pw.write((String) quizName);
                     pw.println();
                     pw.flush();
-                    System.out.println("sent quizname to server");
                     JOptionPane.showConfirmDialog(null,
                             "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
                     return;
@@ -398,7 +392,6 @@ public class Client {
                     pw.write((String) editAction);
                     pw.println();
                     pw.flush();
-                    System.out.println("written course name and edit action");
                     if (editAction == editOptions[0]) {
                         String quizFile = JOptionPane.showInputDialog(null, "What is the name of the file you would like to upload as a quiz?",
                                 "Brightspace", JOptionPane.QUESTION_MESSAGE);
@@ -442,9 +435,7 @@ public class Client {
                         pw.write(String.valueOf(random));
                         pw.println();
                         pw.flush();
-                        System.out.println("written all quiz info");
                         if (br.readLine().equals("W")) {
-                            System.out.println("inside success for making quiz");
                             JOptionPane.showConfirmDialog(null,
                                     "You have successfully created a quiz!\nPlease select OK to continue.",
                                     "Brightspace", JOptionPane.DEFAULT_OPTION);
@@ -484,7 +475,6 @@ public class Client {
                         pw.write((String) quizName);
                         pw.println();
                         pw.flush();
-                        System.out.println("sent quiz name to server");
                         if (br.readLine().equals("Success")) {
                             JOptionPane.showConfirmDialog(null,
                                     "You have successfully deleted a quiz!\nPlease select OK to continue.",
@@ -512,8 +502,9 @@ public class Client {
                             lines.add(line);
                         }
                     } catch (IOException e) {
+                        JOptionPane.showMessageDialog(null, "Error writing to file",
+                                "Brightspace", JOptionPane.ERROR_MESSAGE);
                         e.printStackTrace();
-                        System.out.println("Error");
                     }
                     String[] courses = new String[lines.size()];
                     for (int i = 0; i < lines.size(); i ++) {
@@ -525,7 +516,6 @@ public class Client {
                         pw.write(courseName);
                         pw.println();
                         pw.flush();
-                        System.out.println("Written course name to file");
                         if (br.readLine().equals("Success")) {
                             JOptionPane.showConfirmDialog(null,
                                     "You have successfully deleted a course!\nPlease select OK to continue.",
@@ -561,7 +551,6 @@ public class Client {
                     pw.write(courseName);
                     pw.println();
                     pw.flush();
-                    System.out.println("Written course name to file");
                     ArrayList<String> quizzesToGrade = new ArrayList<>();
                     try {
                         quizzesToGrade = (ArrayList<String>) ois.readObject();
@@ -636,7 +625,6 @@ public class Client {
                     lowerPanel.add(submitButton);
                     content.add(lowerPanel, BorderLayout.SOUTH);
                     content.add(panel);
-                    System.out.println("question loop finished");
                 }
                 //exit option
                 if (teacherAction == teacherDash[4]) {
@@ -646,13 +634,8 @@ public class Client {
             }
             //error if connection is not established with server
         } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error connecting to server",
+                    "Brightspace", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
-            System.out.println("Server side connection error");
         }
     }
-}
-
-
-
-
-
