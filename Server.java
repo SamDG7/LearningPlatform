@@ -141,6 +141,118 @@ public class Server extends Thread {
     public static synchronized ArrayList<String> getQuizQuestions() {
         return quizQuestions;
     }
+    
+    // the setters
+    
+    public static synchronized Socket setSocket() {
+        this.socket = socket;
+    }
+
+    public static synchronized String setCourseName() {
+        this.courseName = courseName;
+    }
+
+    public static synchronized String setUsername() {
+        this.username = username;
+    }
+
+    public static synchronized String setPassword() {
+        this.password = password;
+    }
+
+    public static synchronized String setEnterUser() {
+        this.enterUser = enterUser;
+    }
+
+    public static synchronized String setEnterPass() {
+        this.enterPass = enterPass;
+    }
+
+    public static synchronized ArrayList<String> setQuizNames() {
+        this.quizNames = quizNames;
+    }
+
+    public static synchronized String setQuizFile() {
+        this.quizFile = quizFile;
+    }
+
+    public static synchronized int setQuestionNum() {
+        this.questionNum = questionNum;
+    }
+
+    public static synchronized String setQuizName() {
+        this.quizName = quizName;
+    }
+
+    public static synchronized boolean setNewAccount() {
+        this.newAccount = newAccount;
+    }
+
+    public static synchronized ArrayList<String> setQuestions() {
+        this.questions = questions;
+    }
+
+    public static synchronized boolean setBool() {
+        this.bool = bool;
+    }
+
+    public static synchronized String setTempUser() {
+        this.tempUser = tempUser;
+    }
+
+    public static synchronized Object setEditAction() {
+        this.editAction = editAction;
+    }
+
+    public static synchronized Object setStudentAction() {
+        this.studentAction = studentAction;
+    }
+
+    public static synchronized Object setTeacherAction() {
+        this.teacherAction = teacherAction;
+    }
+
+    public static synchronized ArrayList<String> setCourses() {
+        this.courses = courses;
+    }
+
+    public static synchronized int setNumSpaces() {
+        this.numSpaces = numSpaces;
+    }
+
+    public static synchronized String setTemp() {
+        this.temp = temp;
+    }
+
+    public static synchronized ArrayList<String> setLines2() {
+        this.lines2 = lines2;
+    }
+
+    public static synchronized String setLine() {
+        this.line = line;
+    }
+
+    public static synchronized ArrayList<String> setGradedQuizzes() {
+        this.gradedQuizzes = gradedQuizzes;
+    }
+
+    public static synchronized String setFilename() {
+        this.filename = filename;
+    }
+
+    public static synchronized boolean setAppend() {
+        this.append = append;
+    }
+
+    public static synchronized String setMessage() {
+        this.message = message;
+    }
+
+    public static synchronized ArrayList<String> setQuizQuestions() {
+        this.quizQuestions = quizQuestions;
+    }
+    
+    
 
     public static void main(String[] args) {
         try {
