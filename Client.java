@@ -350,7 +350,7 @@ public class Client {
                 teacherAction = JOptionPane.showInputDialog(null,
                         "Welcome! What would you like to do?", "Brightspace",
                         JOptionPane.INFORMATION_MESSAGE, null,
-                        teacherDash, teacherDash[3]);
+                        teacherDash, teacherDash[4]);
                 if (teacherAction == null) {
                     JOptionPane.showConfirmDialog(null,
                             "Thank you for using Brightspace!", "Brightspace", JOptionPane.DEFAULT_OPTION);
